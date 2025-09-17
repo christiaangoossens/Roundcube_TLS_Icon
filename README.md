@@ -21,6 +21,7 @@ Forked from https://github.com/GermanCoding/Roundcube_TLS_Icon
 - Dropped support for Roundcube 1.5 or older, including support for PHP 5.4-7.2 to align with https://github.com/roundcube/roundcubemail/wiki/Version-History
 - Changed location of the padlock to the from field, to align with the `authres_status` plugin (and how it is displayed in Rainloop Webmail)
 - Added support for showing localhost emails (when received using STARTTLS) as local instead of unencrypted
+- Shows yellow broken padlock on TLS 1.0, TLS 1.1 and 'bad' implementations of TLS 1.2 and TLS 1.3
 
 ## Installation
 
