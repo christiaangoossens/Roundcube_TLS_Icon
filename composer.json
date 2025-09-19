@@ -1,9 +1,9 @@
 {
     "name": "christiaangoossens/tls_icon",
     "type": "roundcube-plugin",
-    "description": "Displays a lock next to the message if it was received using TLS. Requires TLS logging enabled in the MTA.",
+    "description": "Displays TLS status next to the sender name (just like authres_status) in Roundcube, supports local mails and detecting weak TLS ciphers.",
     "license": "MIT",
-    "keywords": ["TLS", "SSL", "icon", "logging"],
+    "keywords": ["TLS", "icon", "roundcube"],
     "homepage": "https://github.com/christiaangoossens/Roundcube_TLS_Icon",
 	"repositories": [
         {
