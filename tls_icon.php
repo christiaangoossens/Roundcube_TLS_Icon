@@ -10,6 +10,7 @@ class tls_icon extends rcube_plugin
 	private $message_headers_done = false;
 	private $icon_img;
 	private $rcmail;
+	private $last_mail_hostname;
 
 	function init()
 	{
@@ -60,6 +61,8 @@ class tls_icon extends rcube_plugin
 				return $p;
 			}
 
+			$this->last_mail_hostname = preg_match('/from\s+([a-zA-Z0-9.-]+)/', $Received, $matches) ? $matches[1] : null;
+
 			if (
 				preg_match_all(tls_icon::POSTFIX_TLS_REGEX, $Received, $items, PREG_PATTERN_ORDER) ||
 				preg_match_all(tls_icon::SENDMAIL_TLS_REGEX, $Received, $items, PREG_PATTERN_ORDER)
@@ -76,13 +79,19 @@ class tls_icon extends rcube_plugin
 				preg_match_all(tls_icon::LOCAL_DELIVERY_REGEX, $Received, $items, PREG_PATTERN_ORDER)
 			) {
 				$this->icon_img .= '<img class="lock_icon" src="plugins/tls_icon/blue_lock.svg" title="' . $this->gettext('internal') . '" />';
+				$this->last_mail_hostname = null; // No need to show the hostname for internal mails
 			} else {
 				$this->icon_img .= '<img class="lock_icon" src="plugins/tls_icon/unlock.svg" title="' . $this->gettext('unencrypted') . '" />';
 			}
 		}
 
 		if (isset($p['output']['from'])) {
-			$p['output']['from']['value'] = $this->icon_img . $p['output']['from']['value'];
+			$suffix = "";
+			if (!empty($this->last_mail_hostname)) {
+				$suffix = ' (' . $this->gettext('through') . ' ' . $this->last_mail_hostname . ')';
+			}
+
+			$p['output']['from']['value'] = $this->icon_img . $p['output']['from']['value'] . $suffix;
 		}
 
 		return $p;
@@ -90,7 +99,7 @@ class tls_icon extends rcube_plugin
 
 	/**
 	 * Determine if the TLS used was weak
-	 * based on Dutch Government guidelines: 
+	 * based on Dutch Government guidelines:
 	 * https://www.ncsc.nl/documenten/publicaties/2025/juni/01/ict-beveiligingsrichtlijnen-voor-transport-layer-security-2025-05
 	 *
 	 * @param string $cipherstring
