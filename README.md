@@ -1,6 +1,6 @@
 # Roundcube TLS Icon
 
-Displays a small icon after the subject line that displays the (presumed) encryption state of received mails.
+Displays a small icon in the sender field that displays the (presumed) encryption state of received mails.
 This plugin parses the "Received" header for the last hop and checks if TLS was used. This requires TLS logging in the
 receiving MTA.
 
@@ -14,6 +14,7 @@ This also only validates the last hop of an email - some emails may run through 
 about the security of these.
 
 Inspired by [roundcube-easy-unsubscribe](https://github.com/SS88UK/roundcube-easy-unsubscribe)
+
 Forked from https://github.com/GermanCoding/Roundcube_TLS_Icon
 
 ### Changes compared to GermanCoding/Roundcube_TLS_Icon
