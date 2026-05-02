@@ -48,6 +48,11 @@ class tls_icon extends rcube_plugin
 		return $p;
 	}
 
+	public function get_svg_path($filename)
+	{
+		return $this->rcmail->output->asset_url('plugins/tls_icon/' . $filename);
+	}
+
 	public function message_headers($p)
 	{
 		if ($this->message_headers_done === false) {
@@ -70,18 +75,18 @@ class tls_icon extends rcube_plugin
 				$data = $items[1][0];
 
 				if ($this->is_weak($data)) {
-					$this->icon_img .= '<img class="lock_icon" src="plugins/tls_icon/weak.svg" title="' . htmlentities($data) . '" />';
+					$this->icon_img .= '<img class="lock_icon" src="' . $this->get_svg_path('weak.svg') . '" title="' . htmlentities($data) . '" />';
 				} else {
-					$this->icon_img .= '<img class="lock_icon" src="plugins/tls_icon/lock.svg" title="' . htmlentities($data) . '" />';
+					$this->icon_img .= '<img class="lock_icon" src="' . $this->get_svg_path('lock.svg') . '" title="' . htmlentities($data) . '" />';
 				}
 			} elseif (
 				preg_match_all(tls_icon::POSTFIX_LOCAL_USER_REGEX, $Received, $items, PREG_PATTERN_ORDER) ||
 				preg_match_all(tls_icon::LOCAL_DELIVERY_REGEX, $Received, $items, PREG_PATTERN_ORDER)
 			) {
-				$this->icon_img .= '<img class="lock_icon" src="plugins/tls_icon/blue_lock.svg" title="' . $this->gettext('internal') . '" />';
+				$this->icon_img .= '<img class="lock_icon" src="' . $this->get_svg_path('blue_lock.svg') . '" title="' . $this->gettext('internal') . '" />';
 				$this->last_mail_hostname = null; // No need to show the hostname for internal mails
 			} else {
-				$this->icon_img .= '<img class="lock_icon" src="plugins/tls_icon/unlock.svg" title="' . $this->gettext('unencrypted') . '" />';
+				$this->icon_img .= '<img class="lock_icon" src="' . $this->get_svg_path('unlock.svg') . '" title="' . $this->gettext('unencrypted') . '" />';
 			}
 		}
 
