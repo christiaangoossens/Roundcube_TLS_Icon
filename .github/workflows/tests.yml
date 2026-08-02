@@ -4,6 +4,7 @@ on:
     push:
     pull_request:
 
+
 jobs:
     test-php:
         name: Test on php ${{ matrix.php-version }}
@@ -12,23 +13,23 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                php-version: ["7.3", "7.4", "8.0", "8.1", "8.2", "8.3"]
-                experimental: [false]
-                composer-options: [""]
+                php-version: [ "7.3", "7.4", "8.0", "8.1", "8.2", "8.3", "8.4", "8.5" ]
+                experimental: [ false ]
+                composer-options: [ "" ]
         steps:
-            - uses: actions/checkout@v3
-            - name: Use php ${{ matrix.php-version }}
-              uses: shivammathur/setup-php@v2
-              with:
-                  php-version: ${{ matrix.php-version }}
-            - name: Validate composer.json
-              run: composer validate
-            - name: Cache module
-              uses: actions/cache@v3
-              with:
-                  path: ~/.composer/cache/
-                  key: composer-cache
-            - name: Install dependencies
-              run: composer install --no-interaction --prefer-dist --no-progress ${{ matrix.composer-options }}
-            - name: Run php tests
-              run: composer run test
+          - uses: actions/checkout@v3
+          - name: Use php ${{ matrix.php-version }}
+            uses: shivammathur/setup-php@v2
+            with:
+                php-version: ${{ matrix.php-version }}
+          - name: Validate composer.json
+            run: composer validate
+          - name: Cache module
+            uses: actions/cache@v3
+            with:
+                path: ~/.composer/cache/
+                key: composer-cache
+          - name: Install dependencies
+            run: composer install --no-interaction --prefer-dist --no-progress ${{ matrix.composer-options }}
+          - name: Run php tests
+            run: composer run test
