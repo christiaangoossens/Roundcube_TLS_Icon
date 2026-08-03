@@ -159,7 +159,10 @@ class tls_icon extends rcube_plugin
 
 			// Noted after key-exchange
 			$allowedKeyExchange = [
-				'X25519',
+				'X25519MLKEM768',
+				'secp384r1',
+				'prime256v1',
+				'x25519',
 				'ECDHE',
 			];
 
